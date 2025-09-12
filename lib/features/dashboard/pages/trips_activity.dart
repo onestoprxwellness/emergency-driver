@@ -5,6 +5,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import '../../../util/image_constant.dart';
 import '../../../util/size_utils.dart';
+import '../../../core/theme/app_colors.dart';
+import '../../../core/theme/app_text_styles.dart';
 import '../viewmodels/trips_activity_viewmodel.dart';
 
 class TripsActivity extends StackedView<TripsActivityViewModel> {
@@ -23,8 +25,6 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
     TripsActivityViewModel viewModel,
     Widget? child,
   ) {
-  // Start 5s emergency-found flow once a valid context is available
-  viewModel.startEmergencyFlowIfNeeded(context);
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -43,68 +43,6 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
             ),
           ),
 
-          // Status bar
-          // Positioned(
-          //   top: 0,
-          //   left: 0,
-          //   right: 0,
-          //   child: Container(
-          //     height: 52.v,
-          //     color: Colors.transparent,
-          //     child: SafeArea(
-          //       child: Container(
-          //         padding: EdgeInsets.symmetric(horizontal: 24.h, vertical: 8.v),
-          //         child: Row(
-          //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //           children: [
-          //             // Time
-          //             Text(
-          //               '12:30',
-          //               style: TextStyle(
-          //                 fontSize: 14.fSize,
-          //                 fontWeight: FontWeight.w500,
-          //                 color: const Color(0xFF101828),
-          //                 fontFamily: 'Roboto',
-          //               ),
-          //             ),
-                      
-          //             // Status icons
-          //             Row(
-          //               children: [
-          //                 // WiFi icon
-          //                 Icon(
-          //                   Icons.wifi,
-          //                   size: 16.adaptSize,
-          //                   color: const Color(0xFF1D2939),
-          //                 ),
-          //                 SizedBox(width: 4.h),
-                          
-          //                 // Network icon
-          //                 Icon(
-          //                   Icons.signal_cellular_4_bar,
-          //                   size: 16.adaptSize,
-          //                   color: const Color(0xFF1D2939),
-          //                 ),
-          //                 SizedBox(width: 4.h),
-                          
-          //                 // Battery icon
-          //                 Icon(
-          //                   Icons.battery_full,
-          //                   size: 16.adaptSize,
-          //                   color: const Color(0xFF1D2939),
-          //                 ),
-          //               ],
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-
-
-
-          // No overlay indicator; ambulance will be shown as the map marker icon
 
           // Top right go offline button
           Positioned(
@@ -144,7 +82,7 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
           // GPS/Location button positioned near emergency banner
           Positioned(
             right: 16.h,
-            bottom: 240.v, // Positioned closer to emergency banner
+            bottom: 240.v, 
             child: Container(
               width: 44.adaptSize,
               height: 44.adaptSize,
@@ -317,6 +255,2039 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                 ),
               ),
             ),
+
+          // Emergency Request Bottom Sheet
+          if (viewModel.showEmergencyRequest)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _buildEmergencyRequestBottomSheet(viewModel),
+            ),
+
+          // Accepted Request Bottom Sheet (NEW)
+          if (viewModel.showAcceptedRequest)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _buildAcceptedRequestBottomSheet(viewModel),
+            ),
+
+          // Waiting to Onboard Bottom Sheet (NEWEST)
+          if (viewModel.showWaitingToOnboard)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _buildWaitingToOnboardBottomSheet(viewModel),
+            ),
+
+          // Hospital Route Bottom Sheet (FINAL)
+          if (viewModel.showHospitalRoute)
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: _buildHospitalRouteBottomSheet(viewModel),
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildEmergencyRequestBottomSheet(TripsActivityViewModel viewModel) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF2F4F7), // Changed to #F2F4F7
+        border: Border.all(color: const Color(0xFFEAECF0)),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromRGBO(77, 79, 82, 0.2),
+            offset: Offset(0, -1.v),
+            blurRadius: 20.adaptSize,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Dragger
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 8.v),
+            child: Container(
+              width: 80.h,
+              height: 4.v,
+              decoration: BoxDecoration(
+                color: AppColors.gray400,
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+          ),
+
+          // Patient's Information Card
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize), // Increased padding
+            decoration: BoxDecoration(
+              color: Colors.white, // Ensure white background
+              borderRadius: BorderRadius.circular(12), // Ensure 12px border radius
+              border: Border.all(color: const Color(0xFFEAECF0)), // Optional: add border for definition
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header with dropdown - CLICKABLE
+                InkWell(
+                  onTap: viewModel.togglePatientInfo,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Patient\'s Information',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.fSize,
+                          height: 1.4285714285714286,
+                          letterSpacing: -0.2,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      AnimatedRotation(
+                        turns: viewModel.isPatientInfoExpanded ? 0.5 : 0.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 18.adaptSize,
+                          color: AppColors.gray400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Animated patient details
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: viewModel.isPatientInfoExpanded ? null : 0,
+                  child: viewModel.isPatientInfoExpanded
+                      ? Column(
+                          children: [
+                            SizedBox(height: 8.v),
+
+                            // Patient Details
+                            Column(
+                              children: [
+                                _buildInfoRow(
+                                  ImageConstant.imgUser,
+                                  'Gender',
+                                  'Female',
+                                ),
+                                SizedBox(height: 8.v),
+                                _buildInfoRow(
+                                  ImageConstant.imgUser,
+                                  'Age group',
+                                  '20 to 39 years',
+                                ),
+                                SizedBox(height: 8.v),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageConstant.imgUser,
+                                          width: 14.adaptSize,
+                                          height: 14.adaptSize,
+                                          color: AppColors.gray400,
+                                        ),
+                                        SizedBox(width: 8.h),
+                                        Text(
+                                          'Emergency level',
+                                          style: AppTextStyles.bodySmall.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 2.v),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFEF0C7),
+                                        border: Border.all(color: const Color(0xFFF79009)),
+                                        borderRadius: BorderRadius.circular(1000),
+                                      ),
+                                      child: Text(
+                                        'Level 3',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.fSize,
+                                          height: 1.6,
+                                          color: const Color(0xFFDC6803),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8.v),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageConstant.imgUser,
+                                          width: 14.adaptSize,
+                                          height: 14.adaptSize,
+                                          color: AppColors.gray400,
+                                        ),
+                                        SizedBox(width: 8.h),
+                                        Text(
+                                          'Payment',
+                                          style: AppTextStyles.bodySmall.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 2.v),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.surface,
+                                        borderRadius: BorderRadius.circular(1000),
+                                      ),
+                                      child: Text(
+                                        'Pending',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.fSize,
+                                          height: 1.6,
+                                          color: AppColors.textPrimary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
+            ),
+          ),
+
+          // Location Information
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 8.h),
+            padding: EdgeInsets.all(16.adaptSize), // Increased padding
+            decoration: BoxDecoration(
+              color: Colors.white, // White background for container
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)), // Optional: add border for definition
+            ),
+            child: Column(
+              children: [
+                // Your Location
+                Container(
+                  padding: EdgeInsets.all(12.adaptSize), // Increased padding
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF2F4F7), // Changed to #F2F4F7
+                    borderRadius: BorderRadius.circular(56),
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        ImageConstant.imgUser,
+                        width: 24.adaptSize,
+                        height: 24.adaptSize,
+                        color: AppColors.primaryBlue,
+                      ),
+                      SizedBox(width: 8.h),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Your location',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.fSize,
+                                height: 1.5,
+                                letterSpacing: -0.2,
+                                color: const Color(0x80000000), // rgba(0, 0, 0, 0.5)
+                              ),
+                            ),
+                            Text(
+                              'Current Location',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.fSize,
+                                height: 1.4285714285714286,
+                                letterSpacing: -0.2,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Dashed line - Positioned at left/start
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 12.v),
+                  width: double.infinity,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 32.h), // Align with the icons
+                      width: 1,
+                      height: 38.v,
+                      child: CustomPaint(
+                        painter: DashedLinePainter(),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Patient Location
+                Container(
+                  padding: EdgeInsets.all(12.adaptSize), // Increased padding
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF2F4F7), // Changed to #F2F4F7
+                    borderRadius: BorderRadius.circular(56),
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        ImageConstant.imgUser,
+                        width: 24.adaptSize,
+                        height: 24.adaptSize,
+                        color: AppColors.primaryLight,
+                      ),
+                      SizedBox(width: 8.h),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Routing to',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.fSize,
+                                height: 1.5,
+                                letterSpacing: -0.2,
+                                color: const Color(0x80000000), // rgba(0, 0, 0, 0.5)
+                              ),
+                            ),
+                            Text(
+                              'Patient\'s address',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.fSize,
+                                height: 1.4285714285714286,
+                                letterSpacing: -0.2,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Time and Distance Info
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize), // Increased padding
+            decoration: BoxDecoration(
+              color: Colors.white, // White background
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)), // Optional: add border for definition
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        '20 Minutes',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18.fSize,
+                          height: 1.5555555555555556,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      SizedBox(height: 4.v),
+                      Text(
+                        'ETA',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12.fSize,
+                          height: 1.5,
+                          letterSpacing: -0.2,
+                          color: const Color(0xFF667085),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                // Divider
+                Container(
+                  width: 1,
+                  height: 50.v,
+                  color: const Color(0xFFEAECF0),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(
+                        '20 Km',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18.fSize,
+                          height: 1.5555555555555556,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      SizedBox(height: 4.v),
+                      Text(
+                        'DISTANCE',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 12.fSize,
+                          height: 1.5,
+                          letterSpacing: -0.2,
+                          color: const Color(0xFF667085),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Call and Message buttons - COMMENTED OUT
+          /*
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 8.h),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 8.v),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE6F5FF),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Column(
+                      children: [
+                        SvgPicture.asset(
+                          ImageConstant.imgUser,
+                          width: 24.adaptSize,
+                          height: 24.adaptSize,
+                          color: AppColors.primaryBlue,
+                        ),
+                        SizedBox(height: 4.v),
+                        Text(
+                          'Call',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10.fSize,
+                            height: 1.6,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16.h),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 8.v),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFE6F5FF),
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Column(
+                      children: [
+                        SvgPicture.asset(
+                          ImageConstant.imgUser,
+                          width: 24.adaptSize,
+                          height: 24.adaptSize,
+                          color: AppColors.primaryBlue,
+                        ),
+                        SizedBox(height: 4.v),
+                        Text(
+                          'Message',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 10.fSize,
+                            height: 1.6,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          */
+
+          // Action Buttons
+          Container(
+            padding: EdgeInsets.all(16.adaptSize),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: viewModel.rejectEmergencyRequest,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFFEF3F2), // Light red background from Figma
+                      padding: EdgeInsets.symmetric(vertical: 12.v),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(1000),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: Text(
+                      'Reject',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14.fSize,
+                        height: 1.4285714285714286,
+                        letterSpacing: -0.2,
+                        color: const Color(0xFFF04438),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 16.h),
+                Expanded(
+                  flex: 2,
+                  child: ElevatedButton(
+                    onPressed: viewModel.acceptEmergencyRequest,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      padding: EdgeInsets.symmetric(vertical: 12.v),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(1000),
+                      ),
+                    ),
+                    child: Text(
+                      'Accept',
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14.fSize,
+                        height: 1.4285714285714286,
+                        letterSpacing: -0.2,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAcceptedRequestBottomSheet(TripsActivityViewModel viewModel) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF2F4F7), // #F2F4F7 background
+        border: Border.all(color: const Color(0xFFEAECF0)),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromRGBO(77, 79, 82, 0.2),
+            offset: Offset(0, -1.v),
+            blurRadius: 20.adaptSize,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Dragger
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 8.v),
+            child: Container(
+              width: 80.h,
+              height: 4.v,
+              decoration: BoxDecoration(
+                color: AppColors.gray400,
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+          ),
+
+          // Patient's Information Card
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header with dropdown - CLICKABLE
+                InkWell(
+                  onTap: viewModel.togglePatientInfo,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Patient\'s Information',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.fSize,
+                          height: 1.4285714285714286,
+                          letterSpacing: -0.2,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      AnimatedRotation(
+                        turns: viewModel.isPatientInfoExpanded ? 0.5 : 0.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 18.adaptSize,
+                          color: AppColors.gray400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Animated patient details
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: viewModel.isPatientInfoExpanded ? null : 0,
+                  child: viewModel.isPatientInfoExpanded
+                      ? Column(
+                          children: [
+                            SizedBox(height: 8.v),
+
+                            // Patient Details
+                            Column(
+                              children: [
+                                _buildInfoRow(
+                                  ImageConstant.imgUser,
+                                  'Gender',
+                                  'Female',
+                                ),
+                                SizedBox(height: 8.v),
+                                _buildInfoRow(
+                                  ImageConstant.imgUser,
+                                  'Age group',
+                                  '20 to 39 years',
+                                ),
+                                SizedBox(height: 8.v),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageConstant.imgUser,
+                                          width: 14.adaptSize,
+                                          height: 14.adaptSize,
+                                          color: AppColors.gray400,
+                                        ),
+                                        SizedBox(width: 8.h),
+                                        Text(
+                                          'Emergency level',
+                                          style: AppTextStyles.bodySmall.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 2.v),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFEF0C7),
+                                        border: Border.all(color: const Color(0xFFF79009)),
+                                        borderRadius: BorderRadius.circular(1000),
+                                      ),
+                                      child: Text(
+                                        'Level 3',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.fSize,
+                                          height: 1.6,
+                                          color: const Color(0xFFDC6803),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8.v),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageConstant.imgUser,
+                                          width: 14.adaptSize,
+                                          height: 14.adaptSize,
+                                          color: AppColors.gray400,
+                                        ),
+                                        SizedBox(width: 8.h),
+                                        Text(
+                                          'Payment',
+                                          style: AppTextStyles.bodySmall.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 2.v),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.surface,
+                                        borderRadius: BorderRadius.circular(1000),
+                                      ),
+                                      child: Text(
+                                        'Pending',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.fSize,
+                                          height: 1.6,
+                                          color: AppColors.textPrimary,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
+            ),
+          ),
+
+          // Location Information
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 8.h),
+            padding: EdgeInsets.all(16.adaptSize),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)),
+            ),
+            child: Column(
+              children: [
+                // Your Location
+                Container(
+                  padding: EdgeInsets.all(12.adaptSize),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF2F4F7),
+                    borderRadius: BorderRadius.circular(56),
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        ImageConstant.imgUser,
+                        width: 24.adaptSize,
+                        height: 24.adaptSize,
+                        color: AppColors.primaryBlue,
+                      ),
+                      SizedBox(width: 8.h),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Your location',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.fSize,
+                                height: 1.5,
+                                letterSpacing: -0.2,
+                                color: const Color(0x80000000),
+                              ),
+                            ),
+                            Text(
+                              'Current Location',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.fSize,
+                                height: 1.4285714285714286,
+                                letterSpacing: -0.2,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Dashed line - Positioned at left/start
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 12.v),
+                  width: double.infinity,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 32.h),
+                      width: 1,
+                      height: 38.v,
+                      child: CustomPaint(
+                        painter: DashedLinePainter(),
+                      ),
+                    ),
+                  ),
+                ),
+
+                // Patient Location
+                Container(
+                  padding: EdgeInsets.all(12.adaptSize),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF2F4F7),
+                    borderRadius: BorderRadius.circular(56),
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        ImageConstant.imgUser,
+                        width: 24.adaptSize,
+                        height: 24.adaptSize,
+                        color: AppColors.primaryLight,
+                      ),
+                      SizedBox(width: 8.h),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Routing to',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.fSize,
+                                height: 1.5,
+                                letterSpacing: -0.2,
+                                color: const Color(0x80000000),
+                              ),
+                            ),
+                            Text(
+                              'Patient\'s address',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.fSize,
+                                height: 1.4285714285714286,
+                                letterSpacing: -0.2,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Time and Distance Info with Call/Message Buttons
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)),
+            ),
+            child: Column(
+              children: [
+                // ETA and Distance Row (no divider)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // ETA Section
+                    Column(
+                      children: [
+                        Text(
+                          '20 Minutes',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.fSize,
+                            height: 1.5555555555555556,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        SizedBox(height: 4.v),
+                        Text(
+                          'ETA',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12.fSize,
+                            height: 1.5,
+                            letterSpacing: -0.2,
+                            color: const Color(0xFF667085),
+                          ),
+                        ),
+                      ],
+                    ),
+                    
+                    // Distance Section
+                    Column(
+                      children: [
+                        Text(
+                          '20 Km',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 18.fSize,
+                            height: 1.5555555555555556,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                        SizedBox(height: 4.v),
+                        Text(
+                          'DISTANCE',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12.fSize,
+                            height: 1.5,
+                            letterSpacing: -0.2,
+                            color: const Color(0xFF667085),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 16.v),
+
+                // Call and Message Buttons Row
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 12.v),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE6F5FF),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              ImageConstant.imgUser,
+                              width: 24.adaptSize,
+                              height: 24.adaptSize,
+                              color: AppColors.primaryBlue,
+                            ),
+                            SizedBox(height: 4.v),
+                            Text(
+                              'Call',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10.fSize,
+                                height: 1.6,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16.h),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 12.v),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE6F5FF),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              ImageConstant.imgUser,
+                              width: 24.adaptSize,
+                              height: 24.adaptSize,
+                              color: AppColors.primaryBlue,
+                            ),
+                            SizedBox(height: 4.v),
+                            Text(
+                              'Message',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10.fSize,
+                                height: 1.6,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // Single "Arrived at Location" Button
+          Container(
+            padding: EdgeInsets.all(16.adaptSize),
+            child: ElevatedButton(
+              onPressed: viewModel.arrivedAtLocation,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                padding: EdgeInsets.symmetric(vertical: 12.v),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1000),
+                ),
+                minimumSize: Size(double.infinity, 48.v),
+              ),
+              child: Text(
+                'Arrived at Location',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.fSize,
+                  height: 1.4285714285714286,
+                  letterSpacing: -0.2,
+                  color: AppColors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(String iconPath, String label, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            SvgPicture.asset(
+              iconPath,
+              width: 14.adaptSize,
+              height: 14.adaptSize,
+              color: AppColors.gray400,
+            ),
+            SizedBox(width: 8.h),
+            Text(
+              label,
+              style: TextStyle(
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
+                fontSize: 12.fSize,
+                height: 1.5,
+                letterSpacing: -0.2,
+                color: const Color(0xFF344054),
+              ),
+            ),
+          ],
+        ),
+        Text(
+          value,
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w500,
+            fontSize: 12.fSize,
+            height: 1.5,
+            letterSpacing: -0.2,
+            color: AppColors.textPrimary,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWaitingToOnboardBottomSheet(TripsActivityViewModel viewModel) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF2F4F7), // #F2F4F7 background
+        border: Border.all(color: const Color(0xFFEAECF0)),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromRGBO(77, 79, 82, 0.2),
+            offset: Offset(0, -1.v),
+            blurRadius: 20.adaptSize,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Dragger
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 8.v),
+            child: Container(
+              width: 80.h,
+              height: 4.v,
+              decoration: BoxDecoration(
+                color: AppColors.gray400,
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+          ),
+
+          // Patient's Information Card (same as before)
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header with dropdown - CLICKABLE
+                InkWell(
+                  onTap: viewModel.togglePatientInfo,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Patient\'s Information',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.fSize,
+                          height: 1.4285714285714286,
+                          letterSpacing: -0.2,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      AnimatedRotation(
+                        turns: viewModel.isPatientInfoExpanded ? 0.5 : 0.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 18.adaptSize,
+                          color: AppColors.gray400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Animated patient details
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: viewModel.isPatientInfoExpanded ? null : 0,
+                  child: viewModel.isPatientInfoExpanded
+                      ? Column(
+                          children: [
+                            SizedBox(height: 8.v),
+
+                            // Patient Details
+                            Column(
+                              children: [
+                                _buildInfoRow(
+                                  ImageConstant.imgUser,
+                                  'Gender',
+                                  'Female',
+                                ),
+                                SizedBox(height: 8.v),
+                                _buildInfoRow(
+                                  ImageConstant.imgUser,
+                                  'Age group',
+                                  '20 to 39 years',
+                                ),
+                                SizedBox(height: 8.v),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageConstant.imgUser,
+                                          width: 14.adaptSize,
+                                          height: 14.adaptSize,
+                                          color: AppColors.gray400,
+                                        ),
+                                        SizedBox(width: 8.h),
+                                        Text(
+                                          'Emergency level',
+                                          style: AppTextStyles.bodySmall.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 2.v),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFEF0C7),
+                                        border: Border.all(color: const Color(0xFFF79009)),
+                                        borderRadius: BorderRadius.circular(1000),
+                                      ),
+                                      child: Text(
+                                        'Level 3',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.fSize,
+                                          height: 1.6,
+                                          color: const Color(0xFFDC6803),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8.v),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageConstant.imgUser,
+                                          width: 14.adaptSize,
+                                          height: 14.adaptSize,
+                                          color: AppColors.gray400,
+                                        ),
+                                        SizedBox(width: 8.h),
+                                        Text(
+                                          'Payment',
+                                          style: AppTextStyles.bodySmall.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 2.v),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFD1FADF), // Light green background for "Paid"
+                                        borderRadius: BorderRadius.circular(1000),
+                                      ),
+                                      child: Text(
+                                        'Paid',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.fSize,
+                                          height: 1.6,
+                                          color: const Color(0xFF027A48), // Green text for "Paid"
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
+            ),
+          ),
+
+          // Waiting to Onboard with Countdown Timer
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)),
+            ),
+            child: Column(
+              children: [
+                // Waiting to onboard text and countdown
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.access_time,
+                          size: 16.adaptSize,
+                          color: AppColors.gray400,
+                        ),
+                        SizedBox(width: 8.h),
+                        Text(
+                          'Waiting to onboard',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 12.fSize,
+                            height: 1.5,
+                            letterSpacing: -0.2,
+                            color: const Color(0xFF344054),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      viewModel.onboardCountdown,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 24.fSize,
+                        height: 1.33,
+                        color: AppColors.textPrimary,
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 16.v),
+
+                // Call and Message Buttons Row
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 12.v),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE6F5FF),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              ImageConstant.imgUser,
+                              width: 24.adaptSize,
+                              height: 24.adaptSize,
+                              color: AppColors.primaryBlue,
+                            ),
+                            SizedBox(height: 4.v),
+                            Text(
+                              'Call',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10.fSize,
+                                height: 1.6,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16.h),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 12.v),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE6F5FF),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              ImageConstant.imgUser,
+                              width: 24.adaptSize,
+                              height: 24.adaptSize,
+                              color: AppColors.primaryBlue,
+                            ),
+                            SizedBox(height: 4.v),
+                            Text(
+                              'Message',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10.fSize,
+                                height: 1.6,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // Passenger Onboarded Button
+          Container(
+            padding: EdgeInsets.all(16.adaptSize),
+            child: ElevatedButton(
+              onPressed: viewModel.passengerOnboarded,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF1B1D29), // Dark navy blue from image
+                padding: EdgeInsets.symmetric(vertical: 12.v),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1000),
+                ),
+                minimumSize: Size(double.infinity, 48.v),
+              ),
+              child: Text(
+                'Passenger Onboarded',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.fSize,
+                  height: 1.4285714285714286,
+                  letterSpacing: -0.2,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHospitalRouteBottomSheet(TripsActivityViewModel viewModel) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF2F4F7), // #F2F4F7 background
+        border: Border.all(color: const Color(0xFFEAECF0)),
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: const Color.fromRGBO(77, 79, 82, 0.2),
+            offset: Offset(0, -1.v),
+            blurRadius: 20.adaptSize,
+          ),
+        ],
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Dragger
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 8.v),
+            child: Container(
+              width: 80.h,
+              height: 4.v,
+              decoration: BoxDecoration(
+                color: AppColors.gray400,
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+          ),
+
+          // Patient's Information Card - COLLAPSIBLE
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header with dropdown - CLICKABLE
+                InkWell(
+                  onTap: viewModel.togglePatientInfo,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Patient\'s Information',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.fSize,
+                          height: 1.4285714285714286,
+                          letterSpacing: -0.2,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      AnimatedRotation(
+                        turns: viewModel.isPatientInfoExpanded ? 0.5 : 0.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 18.adaptSize,
+                          color: AppColors.gray400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Animated patient details
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: viewModel.isPatientInfoExpanded ? null : 0,
+                  child: viewModel.isPatientInfoExpanded
+                      ? Column(
+                          children: [
+                            SizedBox(height: 8.v),
+
+                            // Patient Details
+                            Column(
+                              children: [
+                                _buildInfoRow(
+                                  ImageConstant.imgUser,
+                                  'Gender',
+                                  'Female',
+                                ),
+                                SizedBox(height: 8.v),
+                                _buildInfoRow(
+                                  ImageConstant.imgUser,
+                                  'Age group',
+                                  '20 to 39 years',
+                                ),
+                                SizedBox(height: 8.v),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageConstant.imgUser,
+                                          width: 14.adaptSize,
+                                          height: 14.adaptSize,
+                                          color: AppColors.gray400,
+                                        ),
+                                        SizedBox(width: 8.h),
+                                        Text(
+                                          'Emergency level',
+                                          style: AppTextStyles.bodySmall.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 2.v),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFFEF0C7),
+                                        border: Border.all(color: const Color(0xFFF79009)),
+                                        borderRadius: BorderRadius.circular(1000),
+                                      ),
+                                      child: Text(
+                                        'Level 3',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.fSize,
+                                          height: 1.6,
+                                          color: const Color(0xFFDC6803),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 8.v),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageConstant.imgUser,
+                                          width: 14.adaptSize,
+                                          height: 14.adaptSize,
+                                          color: AppColors.gray400,
+                                        ),
+                                        SizedBox(width: 8.h),
+                                        Text(
+                                          'Payment',
+                                          style: AppTextStyles.bodySmall.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 2.v),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFD1FADF), // Light green background for "Paid"
+                                        borderRadius: BorderRadius.circular(1000),
+                                      ),
+                                      child: Text(
+                                        'Paid',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.fSize,
+                                          height: 1.6,
+                                          color: const Color(0xFF027A48), // Green text for "Paid"
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
+            ),
+          ),
+
+          // Hospital's Information Card - NEW & COLLAPSIBLE
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header with dropdown - CLICKABLE
+                InkWell(
+                  onTap: viewModel.toggleHospitalInfo,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Hospital\'s Information',
+                        style: TextStyle(
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14.fSize,
+                          height: 1.4285714285714286,
+                          letterSpacing: -0.2,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      AnimatedRotation(
+                        turns: viewModel.isHospitalInfoExpanded ? 0.5 : 0.0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Icon(
+                          Icons.keyboard_arrow_down,
+                          size: 18.adaptSize,
+                          color: AppColors.gray400,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Animated hospital details
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 300),
+                  height: viewModel.isHospitalInfoExpanded ? null : 0,
+                  child: viewModel.isHospitalInfoExpanded
+                      ? Column(
+                          children: [
+                            SizedBox(height: 8.v),
+
+                            // Hospital Details
+                            Column(
+                              children: [
+                                _buildInfoRow(
+                                  ImageConstant.imgUser,
+                                  'Name',
+                                  'Happy Luis Hospital',
+                                ),
+                                SizedBox(height: 8.v),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          ImageConstant.imgUser,
+                                          width: 14.adaptSize,
+                                          height: 14.adaptSize,
+                                          color: AppColors.gray400,
+                                        ),
+                                        SizedBox(width: 8.h),
+                                        Text(
+                                          'Organization',
+                                          style: AppTextStyles.bodySmall.copyWith(
+                                            color: AppColors.textSecondary,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 2.v),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xFFF2F4F7),
+                                        border: Border.all(color: const Color(0xFFD0D5DD)),
+                                        borderRadius: BorderRadius.circular(1000),
+                                      ),
+                                      child: Text(
+                                        'Private',
+                                        style: TextStyle(
+                                          fontFamily: 'Inter',
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 10.fSize,
+                                          height: 1.6,
+                                          color: const Color(0xFF344054),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
+                      : const SizedBox.shrink(),
+                ),
+              ],
+            ),
+          ),
+
+          // Location Section
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)),
+            ),
+            child: Column(
+              children: [
+                // Your location
+                Row(
+                  children: [
+                    Container(
+                      width: 8.adaptSize,
+                      height: 8.adaptSize,
+                      decoration: BoxDecoration(
+                        color: AppColors.gray400,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(width: 12.h),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Your location',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10.fSize,
+                            height: 1.6,
+                            color: AppColors.gray400,
+                          ),
+                        ),
+                        Text(
+                          'Current Location',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.fSize,
+                            height: 1.4285714285714286,
+                            letterSpacing: -0.2,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+
+                // Dotted line
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 8.v),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 4.h), // Center with the dots
+                      Column(
+                        children: List.generate(3, (index) => Container(
+                          margin: EdgeInsets.symmetric(vertical: 1.v),
+                          width: 2.adaptSize,
+                          height: 2.adaptSize,
+                          decoration: BoxDecoration(
+                            color: AppColors.gray300,
+                            shape: BoxShape.circle,
+                          ),
+                        )),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Routing to hospital
+                Row(
+                  children: [
+                    Container(
+                      width: 8.adaptSize,
+                      height: 8.adaptSize,
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryBlue,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    SizedBox(width: 12.h),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Routing to',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10.fSize,
+                            height: 1.6,
+                            color: AppColors.gray400,
+                          ),
+                        ),
+                        Text(
+                          'Hospital\'s address',
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14.fSize,
+                            height: 1.4285714285714286,
+                            letterSpacing: -0.2,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // ETA and Distance with Call/Message buttons
+          Container(
+            margin: EdgeInsets.all(8.adaptSize),
+            padding: EdgeInsets.all(16.adaptSize),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: const Color(0xFFEAECF0)),
+            ),
+            child: Column(
+              children: [
+                // ETA and Distance Row
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '24 Minutes',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24.fSize,
+                              height: 1.33,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          Text(
+                            'ETA',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.fSize,
+                              height: 1.5,
+                              letterSpacing: -0.2,
+                              color: const Color(0xFF667085),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            '37 Km',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w600,
+                              fontSize: 24.fSize,
+                              height: 1.33,
+                              color: AppColors.textPrimary,
+                            ),
+                          ),
+                          Text(
+                            'DISTANCE',
+                            style: TextStyle(
+                              fontFamily: 'Inter',
+                              fontWeight: FontWeight.w400,
+                              fontSize: 12.fSize,
+                              height: 1.5,
+                              letterSpacing: -0.2,
+                              color: const Color(0xFF667085),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(height: 16.v),
+
+                // Call hospital and Message hospital Buttons Row
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 12.v),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE6F5FF),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              ImageConstant.imgUser,
+                              width: 24.adaptSize,
+                              height: 24.adaptSize,
+                              color: AppColors.primaryBlue,
+                            ),
+                            SizedBox(height: 4.v),
+                            Text(
+                              'Call hospital',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10.fSize,
+                                height: 1.6,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: 16.h),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 12.v),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFE6F5FF),
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        child: Column(
+                          children: [
+                            SvgPicture.asset(
+                              ImageConstant.imgUser,
+                              width: 24.adaptSize,
+                              height: 24.adaptSize,
+                              color: AppColors.primaryBlue,
+                            ),
+                            SizedBox(height: 4.v),
+                            Text(
+                              'Message hospital',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 10.fSize,
+                                height: 1.6,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // Arrived at Hospital Button
+          Container(
+            padding: EdgeInsets.all(16.adaptSize),
+            child: ElevatedButton(
+              onPressed: viewModel.arrivedAtHospital,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF1B1D29), // Dark navy blue
+                padding: EdgeInsets.symmetric(vertical: 12.v),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1000),
+                ),
+                minimumSize: Size(double.infinity, 48.v),
+              ),
+              child: Text(
+                'Arrived at Hospital',
+                style: TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.fSize,
+                  height: 1.4285714285714286,
+                  letterSpacing: -0.2,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -332,4 +2303,29 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
     viewModel.setLocationFromDashboard(currentPosition, hasLocationPermission);
     super.onViewModelReady(viewModel);
   }
+}
+
+class DashedLinePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = AppColors.primaryBlue
+      ..strokeWidth = 1.0;
+
+    const dashHeight = 2.0;
+    const dashSpace = 2.0;
+    double startY = 0;
+
+    while (startY < size.height) {
+      canvas.drawLine(
+        Offset(0, startY),
+        Offset(0, startY + dashHeight),
+        paint,
+      );
+      startY += dashHeight + dashSpace;
+    }
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
