@@ -314,13 +314,16 @@ class TripsActivityViewModel extends BaseViewModel {
   }
 
   void arrivedAtHospital() {
-    print('🏥 Arrived at hospital, completing journey');
+    print('🏥 Arrived at hospital, navigating to payment summary');
     _showHospitalRoute = false;
-    _showWaitingPanel = true;
     notifyListeners();
-    // Start new simulation cycle
-    _startEmergencySimulation();
+    
+    // Navigation will be handled by the view using this callback
+    onNavigateToPayment?.call();
   }
+
+  // Callback for navigation
+  VoidCallback? onNavigateToPayment;
 
   @override
   void dispose() {

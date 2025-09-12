@@ -734,4 +734,7 @@ class ImageConstant {
   static String call1 = '$base/call1.svg';
   static String call2 = '$base/call2.svg';
   static String messages1 = '$base/messages1.svg';
+  static String success = '$base/successPayment.svg';
+  static String send1 = '$base/send1.svg';
+  static String send2 = '$base/send2.svg'; 
 }

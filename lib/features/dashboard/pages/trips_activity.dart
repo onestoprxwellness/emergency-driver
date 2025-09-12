@@ -8,6 +8,9 @@ import '../../../util/size_utils.dart';
 import '../../../core/theme/app_colors.dart';
 import '../../../core/theme/app_text_styles.dart';
 import '../viewmodels/trips_activity_viewmodel.dart';
+import '../../payment/pages/payment_summary_page.dart';
+import '../../chat/pages/patient_chat_page.dart';
+import '../../chat/pages/hospital_chat_page.dart';
 
 class TripsActivity extends StackedView<TripsActivityViewModel> {
   final Position? currentPosition;
@@ -25,6 +28,16 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
     TripsActivityViewModel viewModel,
     Widget? child,
   ) {
+    // Set up navigation callback
+    viewModel.onNavigateToPayment = () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const PaymentSummaryPage(),
+        ),
+      );
+    };
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: Stack(
@@ -1214,68 +1227,86 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                 SizedBox(height: 16.v),
 
                 // Call and Message Buttons Row
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 12.v),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE6F5FF),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(
-                              ImageConstant.call1,
-                              width: 24.adaptSize,
-                              height: 24.adaptSize,
+                Builder(
+                  builder: (builderContext) => Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            // TODO: Implement call functionality
+                            print('Calling patient');
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 12.v),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE6F5FF),
+                              borderRadius: BorderRadius.circular(100),
                             ),
-                            SizedBox(height: 4.v),
-                            Text(
-                              'Call',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10.fSize,
-                                height: 1.6,
-                                color: AppColors.textPrimary,
-                              ),
+                            child: Column(
+                              children: [
+                                SvgPicture.asset(
+                                  ImageConstant.call1,
+                                  width: 24.adaptSize,
+                                  height: 24.adaptSize,
+                                ),
+                                SizedBox(height: 4.v),
+                                Text(
+                                  'Call',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10.fSize,
+                                    height: 1.6,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 16.h),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 12.v),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE6F5FF),
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(
-                              ImageConstant.messages1,
-                              width: 24.adaptSize,
-                              height: 24.adaptSize,
-                            ),
-                            SizedBox(height: 4.v),
-                            Text(
-                              'Message',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10.fSize,
-                                height: 1.6,
-                                color: AppColors.textPrimary,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 16.h),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              builderContext,
+                              MaterialPageRoute(
+                                builder: (context) => const PatientChatPage(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 12.v),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE6F5FF),
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: Column(
+                              children: [
+                                SvgPicture.asset(
+                                  ImageConstant.messages1,
+                                  width: 24.adaptSize,
+                                  height: 24.adaptSize,
+                                ),
+                                SizedBox(height: 4.v),
+                                Text(
+                                  'Message',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10.fSize,
+                                    height: 1.6,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -2193,68 +2224,85 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                 SizedBox(height: 16.v),
 
                 // Call hospital and Message hospital Buttons Row
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 12.v),
-                        decoration: BoxDecoration(
-                          color: const Color(0x1A1D9C7D), // Changed to #1D9C7D1A
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(
-                              ImageConstant.call2,
-                              width: 24.adaptSize,
-                              height: 24.adaptSize,
+                Builder(
+                  builder: (builderContext) => Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            print('Calling hospital');
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 12.v),
+                            decoration: BoxDecoration(
+                              color: const Color(0x1A1D9C7D), // Changed to #1D9C7D1A
+                              borderRadius: BorderRadius.circular(100),
                             ),
-                            SizedBox(height: 4.v),
-                            Text(
-                              'Call hospital',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10.fSize,
-                                height: 1.6,
-                                color: AppColors.textPrimary,
-                              ),
+                            child: Column(
+                              children: [
+                                SvgPicture.asset(
+                                  ImageConstant.call2,
+                                  width: 24.adaptSize,
+                                  height: 24.adaptSize,
+                                ),
+                                SizedBox(height: 4.v),
+                                Text(
+                                  'Call hospital',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10.fSize,
+                                    height: 1.6,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 16.h),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 12.v),
-                        decoration: BoxDecoration(
-                          color: const Color(0x1A1D9C7D), // Changed to #1D9C7D1A
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        child: Column(
-                          children: [
-                            SvgPicture.asset(
-                              ImageConstant.messages2,
-                              width: 24.adaptSize,
-                              height: 24.adaptSize,
-                            ),
-                            SizedBox(height: 4.v),
-                            Text(
-                              'Message hospital',
-                              style: TextStyle(
-                                fontFamily: 'Inter',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 10.fSize,
-                                height: 1.6,
-                                color: AppColors.textPrimary,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(width: 16.h),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              builderContext,
+                              MaterialPageRoute(
+                                builder: (context) => const HospitalChatPage(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 12.v),
+                            decoration: BoxDecoration(
+                              color: const Color(0x1A1D9C7D), // Changed to #1D9C7D1A
+                              borderRadius: BorderRadius.circular(100),
+                            ),
+                            child: Column(
+                              children: [
+                                SvgPicture.asset(
+                                  ImageConstant.messages2,
+                                  width: 24.adaptSize,
+                                  height: 24.adaptSize,
+                                ),
+                                SizedBox(height: 4.v),
+                                Text(
+                                  'Message hospital',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 10.fSize,
+                                    height: 1.6,
+                                    color: AppColors.textPrimary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

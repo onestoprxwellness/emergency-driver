@@ -44,10 +44,10 @@ class CustomInputField extends StatelessWidget {
                   prefixIcon!,
                   width: 18,
                   height: 18,
-                  colorFilter: ColorFilter.mode(
-                    AppColors.gray400,
-                    BlendMode.srcIn,
-                  ),
+                  // colorFilter: ColorFilter.mode(
+                  //   AppColors.gray400,
+                  //   BlendMode.srcIn,
+                  // ),
                 ),
               if (prefixIcon != null) const SizedBox(width: 8),
               
@@ -99,10 +99,10 @@ class CustomInputField extends StatelessWidget {
                             suffixIcon!,
                             width: 18,
                             height: 18,
-                            colorFilter: ColorFilter.mode(
-                              AppColors.gray400,
-                              BlendMode.srcIn,
-                            ),
+                            // colorFilter: ColorFilter.mode(
+                            //   AppColors.gray400,
+                            //   BlendMode.srcIn,
+                            // ),
                           ),
                         ],
                       ],
