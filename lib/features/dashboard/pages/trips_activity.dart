@@ -390,7 +390,7 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                 ),
                                 SizedBox(height: 8.v),
                                 _buildInfoRow(
-                                  ImageConstant.imgUser,
+                                  ImageConstant.ageGroupIcon,
                                   'Age group',
                                   '20 to 39 years',
                                 ),
@@ -401,10 +401,9 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          ImageConstant.imgUser,
+                                          ImageConstant.emergencyLevel,
                                           width: 14.adaptSize,
                                           height: 14.adaptSize,
-                                          color: AppColors.gray400,
                                         ),
                                         SizedBox(width: 8.h),
                                         Text(
@@ -442,10 +441,9 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          ImageConstant.imgUser,
+                                          ImageConstant.cashIcon,
                                           width: 14.adaptSize,
                                           height: 14.adaptSize,
-                                          color: AppColors.gray400,
                                         ),
                                         SizedBox(width: 8.h),
                                         Text(
@@ -505,12 +503,11 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                   ),
                   child: Row(
                     children: [
-                      SvgPicture.asset(
-                        ImageConstant.imgUser,
-                        width: 24.adaptSize,
-                        height: 24.adaptSize,
-                        color: AppColors.primaryBlue,
-                      ),
+            SvgPicture.asset(
+              ImageConstant.locationUser,
+              width: 24.adaptSize,
+              height: 24.adaptSize,
+            ),
                       SizedBox(width: 8.h),
                       Expanded(
                         child: Column(
@@ -572,10 +569,9 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                   child: Row(
                     children: [
                       SvgPicture.asset(
-                        ImageConstant.imgUser,
+                        ImageConstant.pinLocation,
                         width: 24.adaptSize,
                         height: 24.adaptSize,
-                        color: AppColors.primaryLight,
                       ),
                       SizedBox(width: 8.h),
                       Expanded(
@@ -919,7 +915,7 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                 ),
                                 SizedBox(height: 8.v),
                                 _buildInfoRow(
-                                  ImageConstant.imgUser,
+                                  ImageConstant.ageGroupIcon,
                                   'Age group',
                                   '20 to 39 years',
                                 ),
@@ -930,10 +926,10 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          ImageConstant.imgUser,
+                                          ImageConstant.emergencyLevel,
                                           width: 14.adaptSize,
                                           height: 14.adaptSize,
-                                          color: AppColors.gray400,
+                                         
                                         ),
                                         SizedBox(width: 8.h),
                                         Text(
@@ -971,10 +967,10 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          ImageConstant.imgUser,
+                                          ImageConstant.cashIcon,
                                           width: 14.adaptSize,
                                           height: 14.adaptSize,
-                                          color: AppColors.gray400,
+                                         
                                         ),
                                         SizedBox(width: 8.h),
                                         Text(
@@ -1035,10 +1031,10 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                   child: Row(
                     children: [
                       SvgPicture.asset(
-                        ImageConstant.imgUser,
+                        ImageConstant.locationUser,
                         width: 24.adaptSize,
                         height: 24.adaptSize,
-                        color: AppColors.primaryBlue,
+                       
                       ),
                       SizedBox(width: 8.h),
                       Expanded(
@@ -1101,10 +1097,9 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                   child: Row(
                     children: [
                       SvgPicture.asset(
-                        ImageConstant.imgUser,
+                        ImageConstant.pinLocation,
                         width: 24.adaptSize,
                         height: 24.adaptSize,
-                        color: AppColors.primaryLight,
                       ),
                       SizedBox(width: 8.h),
                       Expanded(
@@ -1154,7 +1149,7 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
             ),
             child: Column(
               children: [
-                // ETA and Distance Row (no divider)
+               
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -1231,10 +1226,9 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                         child: Column(
                           children: [
                             SvgPicture.asset(
-                              ImageConstant.imgUser,
+                              ImageConstant.call1,
                               width: 24.adaptSize,
                               height: 24.adaptSize,
-                              color: AppColors.primaryBlue,
                             ),
                             SizedBox(height: 4.v),
                             Text(
@@ -1262,10 +1256,9 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                         child: Column(
                           children: [
                             SvgPicture.asset(
-                              ImageConstant.imgUser,
+                              ImageConstant.messages1,
                               width: 24.adaptSize,
                               height: 24.adaptSize,
-                              color: AppColors.primaryBlue,
                             ),
                             SizedBox(height: 4.v),
                             Text(
@@ -1454,7 +1447,7 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                 ),
                                 SizedBox(height: 8.v),
                                 _buildInfoRow(
-                                  ImageConstant.imgUser,
+                                  ImageConstant.ageGroupIcon,
                                   'Age group',
                                   '20 to 39 years',
                                 ),
@@ -1465,10 +1458,9 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          ImageConstant.imgUser,
+                                          ImageConstant.emergencyLevel,
                                           width: 14.adaptSize,
                                           height: 14.adaptSize,
-                                          color: AppColors.gray400,
                                         ),
                                         SizedBox(width: 8.h),
                                         Text(
@@ -1506,10 +1498,9 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          ImageConstant.imgUser,
+                                          ImageConstant.cashIcon,
                                           width: 14.adaptSize,
                                           height: 14.adaptSize,
-                                          color: AppColors.gray400,
                                         ),
                                         SizedBox(width: 8.h),
                                         Text(
@@ -1613,7 +1604,7 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                         child: Column(
                           children: [
                             SvgPicture.asset(
-                              ImageConstant.imgUser,
+                              ImageConstant.call1,
                               width: 24.adaptSize,
                               height: 24.adaptSize,
                               color: AppColors.primaryBlue,
@@ -1644,7 +1635,7 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                         child: Column(
                           children: [
                             SvgPicture.asset(
-                              ImageConstant.imgUser,
+                              ImageConstant.messages1,
                               width: 24.adaptSize,
                               height: 24.adaptSize,
                               color: AppColors.primaryBlue,
@@ -1795,7 +1786,7 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                 ),
                                 SizedBox(height: 8.v),
                                 _buildInfoRow(
-                                  ImageConstant.imgUser,
+                                  ImageConstant.ageGroupIcon,
                                   'Age group',
                                   '20 to 39 years',
                                 ),
@@ -1806,10 +1797,10 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          ImageConstant.imgUser,
+                                          ImageConstant.emergencyLevel,
                                           width: 14.adaptSize,
                                           height: 14.adaptSize,
-                                          color: AppColors.gray400,
+                                          // color: AppColors.gray400,
                                         ),
                                         SizedBox(width: 8.h),
                                         Text(
@@ -1847,10 +1838,10 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          ImageConstant.imgUser,
+                                          ImageConstant.cashIcon,
                                           width: 14.adaptSize,
                                           height: 14.adaptSize,
-                                          color: AppColors.gray400,
+                                          // color: AppColors.gray400,
                                         ),
                                         SizedBox(width: 8.h),
                                         Text(
@@ -1945,7 +1936,7 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                             Column(
                               children: [
                                 _buildInfoRow(
-                                  ImageConstant.imgUser,
+                                  ImageConstant.hospital02,
                                   'Name',
                                   'Happy Luis Hospital',
                                 ),
@@ -1956,10 +1947,9 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                                     Row(
                                       children: [
                                         SvgPicture.asset(
-                                          ImageConstant.imgUser,
+                                          ImageConstant.briefCase01,
                                           width: 14.adaptSize,
                                           height: 14.adaptSize,
-                                          color: AppColors.gray400,
                                         ),
                                         SizedBox(width: 8.h),
                                         Text(
@@ -2000,118 +1990,128 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
             ),
           ),
 
-          // Location Section
+          // Location Information
           Container(
-            margin: EdgeInsets.all(8.adaptSize),
-            padding: EdgeInsets.all(16.adaptSize),
+            margin: EdgeInsets.symmetric(horizontal: 8.h),
+            padding: EdgeInsets.all(16.adaptSize), // Increased padding
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.white, // White background for container
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: const Color(0xFFEAECF0)),
+              border: Border.all(color: const Color(0xFFEAECF0)), // Optional: add border for definition
             ),
             child: Column(
               children: [
-                // Your location
-                Row(
-                  children: [
-                    Container(
-                      width: 8.adaptSize,
-                      height: 8.adaptSize,
-                      decoration: BoxDecoration(
-                        color: AppColors.gray400,
-                        shape: BoxShape.circle,
-                      ),
-                    ),
-                    SizedBox(width: 12.h),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Your location',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 10.fSize,
-                            height: 1.6,
-                            color: AppColors.gray400,
-                          ),
-                        ),
-                        Text(
-                          'Current Location',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.fSize,
-                            height: 1.4285714285714286,
-                            letterSpacing: -0.2,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-
-                // Dotted line
+                // Your Location
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 8.v),
+                  padding: EdgeInsets.all(12.adaptSize), // Increased padding
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF2F4F7), // Changed to #F2F4F7
+                    borderRadius: BorderRadius.circular(56),
+                  ),
                   child: Row(
                     children: [
-                      SizedBox(width: 4.h), // Center with the dots
-                      Column(
-                        children: List.generate(3, (index) => Container(
-                          margin: EdgeInsets.symmetric(vertical: 1.v),
-                          width: 2.adaptSize,
-                          height: 2.adaptSize,
-                          decoration: BoxDecoration(
-                            color: AppColors.gray300,
-                            shape: BoxShape.circle,
-                          ),
-                        )),
+            SvgPicture.asset(
+              ImageConstant.locationUser,
+              width: 24.adaptSize,
+              height: 24.adaptSize,
+            ),
+                      SizedBox(width: 8.h),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Your location',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.fSize,
+                                height: 1.5,
+                                letterSpacing: -0.2,
+                                color: const Color(0x80000000), // rgba(0, 0, 0, 0.5)
+                              ),
+                            ),
+                            Text(
+                              'Current Location',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.fSize,
+                                height: 1.4285714285714286,
+                                letterSpacing: -0.2,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
 
-                // Routing to hospital
-                Row(
-                  children: [
-                    Container(
-                      width: 8.adaptSize,
-                      height: 8.adaptSize,
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryBlue,
-                        shape: BoxShape.circle,
+                // Dashed line - Positioned at left/start
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 12.v),
+                  width: double.infinity,
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: EdgeInsets.only(left: 32.h), // Align with the icons
+                      width: 1,
+                      height: 38.v,
+                      child: CustomPaint(
+                        painter: DashedLinePainter(),
                       ),
                     ),
-                    SizedBox(width: 12.h),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Routing to',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w400,
-                            fontSize: 10.fSize,
-                            height: 1.6,
-                            color: AppColors.gray400,
-                          ),
+                  ),
+                ),
+
+                // Hospital Location
+                Container(
+                  padding: EdgeInsets.all(12.adaptSize),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF2F4F7),
+                    borderRadius: BorderRadius.circular(56),
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        ImageConstant.pinLocation,
+                        width: 24.adaptSize,
+                        height: 24.adaptSize,
+                      ),
+                      SizedBox(width: 8.h),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Routing to',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 12.fSize,
+                                height: 1.5,
+                                letterSpacing: -0.2,
+                                color: const Color(0x80000000),
+                              ),
+                            ),
+                            Text(
+                              'Hospital\'s address',
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14.fSize,
+                                height: 1.4285714285714286,
+                                letterSpacing: -0.2,
+                                color: AppColors.textPrimary,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          'Hospital\'s address',
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14.fSize,
-                            height: 1.4285714285714286,
-                            letterSpacing: -0.2,
-                            color: AppColors.textPrimary,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -2199,16 +2199,15 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 12.v),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE6F5FF),
+                          color: const Color(0x1A1D9C7D), // Changed to #1D9C7D1A
                           borderRadius: BorderRadius.circular(100),
                         ),
                         child: Column(
                           children: [
                             SvgPicture.asset(
-                              ImageConstant.imgUser,
+                              ImageConstant.call2,
                               width: 24.adaptSize,
                               height: 24.adaptSize,
-                              color: AppColors.primaryBlue,
                             ),
                             SizedBox(height: 4.v),
                             Text(
@@ -2230,16 +2229,15 @@ class TripsActivity extends StackedView<TripsActivityViewModel> {
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 12.v),
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE6F5FF),
+                          color: const Color(0x1A1D9C7D), // Changed to #1D9C7D1A
                           borderRadius: BorderRadius.circular(100),
                         ),
                         child: Column(
                           children: [
                             SvgPicture.asset(
-                              ImageConstant.imgUser,
+                              ImageConstant.messages2,
                               width: 24.adaptSize,
                               height: 24.adaptSize,
-                              color: AppColors.primaryBlue,
                             ),
                             SizedBox(height: 4.v),
                             Text(

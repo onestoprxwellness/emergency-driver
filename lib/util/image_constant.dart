@@ -722,4 +722,16 @@ class ImageConstant {
   static String blueCar='$base/blueCar.svg';
   static String tripIcon='$base/trips.svg';
   static String goOffline='$base/powerButton.svg';
+  static String ageGroupIcon='$base/ageGroup.svg';
+  static String cashIcon='$base/cashIcon.svg';
+  static String emergencyLevel = '$base/emergencyLevel.svg';
+  static String locationUser = '$base/locationUser.svg';
+  static String pinLocation = '$base/pinLocation.svg';
+  static String briefCase01 = '$base/briefcase01.svg';
+  static String hospital02 = '$base/hospital02.svg';
+  static String noMoney = '$base/noMoney.svg';
+  static String messages2 = '$base/messages2.svg';
+  static String call1 = '$base/call1.svg';
+  static String call2 = '$base/call2.svg';
+  static String messages1 = '$base/messages1.svg';
 }
