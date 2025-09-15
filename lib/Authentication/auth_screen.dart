@@ -10,6 +10,8 @@ import '../widgets/country_selector.dart';
 import '../widgets/custom_image_view.dart';
 import 'login_screen.dart';
 import 'registration_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -61,7 +63,7 @@ class _AuthScreenState extends State<AuthScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           // Logo
-        Image.asset(
+        SvgPicture.asset(
             ImageConstant.AppLogoNew,
             height: 20.v,
             fit: BoxFit.contain,

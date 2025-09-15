@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'OneStopRx Driver',
       theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      home: const RegistrationScreen(), // Changed to test the registration screen
+      home: const AuthScreen(), 
     );
   }
 }
