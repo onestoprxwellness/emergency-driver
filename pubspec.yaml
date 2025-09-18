@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.7.2
+  sdk: '>=3.7.0 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -219,42 +219,49 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: PlusJakartaLight
-      fonts:
-        - asset: assets/fonts/PlusJakartaSans-Light.ttf
-    - family: PlusJakartaRegular
+    # PlusJakartaSans font family with all weights
+    - family: PlusJakartaSans
       fonts:
         - asset: assets/fonts/PlusJakartaSans-Regular.ttf
-    - family: PlusJakartaMedium
-      fonts:
+          weight: 400
+        - asset: assets/fonts/PlusJakartaSans-Light.ttf
+          weight: 300
         - asset: assets/fonts/PlusJakartaSans-Medium.ttf
-    - family: PlusJakartaSemiBold
-      fonts:
+          weight: 500
         - asset: assets/fonts/PlusJakartaSans-SemiBold.ttf
-    - family: PlusJakartaBold
-      fonts:
+          weight: 600
         - asset: assets/fonts/PlusJakartaSans-Bold.ttf
-    - family: InterLight
-      fonts:
-        - asset: assets/fonts/Inter_28pt-Light.ttf
-    - family: InterBold
-      fonts:
-        - asset: assets/fonts/Inter_28pt-Bold.ttf
-    - family: InterBlack
-      fonts:
-        - asset: assets/fonts/Inter_28pt-Black.ttf
-    - family: InterRegular
+          weight: 700
+    
+    # Inter font family with all weights
+    - family: Inter
       fonts:
         - asset: assets/fonts/Inter_24pt-Regular.ttf
-    - family: InterSemiBold
-      fonts:
+          weight: 400
+        - asset: assets/fonts/Inter_28pt-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Inter_28pt-Medium.ttf
+          weight: 500
         - asset: assets/fonts/Inter_28pt-SemiBold.ttf
-    - family: InterMedium
-      fonts:
-        - asset: assets/fonts/Inter_28pt-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter_28pt-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Inter_28pt-Black.ttf
+          weight: 900
+    
+    # Onest font family with all weights
     - family: Onest
       fonts:
-        - asset: assets/fonts/Inter_24pt-Regular.ttf
+        - asset: assets/fonts/OnestRegular.ttf
+          weight: 400
+        - asset: assets/fonts/OnestLight.ttf
+          weight: 300
+        - asset: assets/fonts/OnestMedium.ttf
+          weight: 500
+        - asset: assets/fonts/OnestSemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/OnestBold.ttf
+          weight: 700
 
 
   #  fonts:

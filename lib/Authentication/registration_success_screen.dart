@@ -24,7 +24,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
     try {
       if (await canLaunchUrl(url)) {
         await launchUrl(url, mode: LaunchMode.externalApplication);
-        // Simulate that the video has been watched when opened
         setState(() {
           _hasWatchedVideo = true;
         });
@@ -57,7 +56,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header
             AppHeader(
               selectedCountry: const CountryFlag(
                 name: 'Nigeria',
@@ -68,8 +66,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
               countries: const [],
               onCountryChanged: (CountryFlag country) {},
             ),
-
-            // Content
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -78,8 +74,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const SizedBox(height: 32),
-
-                      // Success Icon
                       Container(
                         width: 80,
                         height: 80,
@@ -100,8 +94,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-
-                      // Success Title
                       Text(
                         'Registration Successful',
                         style: AppTextStyles.headingMedium.copyWith(
@@ -111,8 +103,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 12),
-
-                      // Success Description
                       Text(
                         'Thank you for registering! Your application is currently being reviewed by our team. Please proceed to the mandatory driver training while you wait for our feedback.',
                         style: AppTextStyles.bodyMedium.copyWith(
@@ -121,8 +111,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 32),
-
-                      // Training Instructions
                       Row(
                         children: [
                           Expanded(
@@ -134,7 +122,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                             ),
                           ),
                           const SizedBox(width: 16),
-                          // Time Badge
                           Container(
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                             decoration: BoxDecoration(
@@ -168,7 +155,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Video Player Container
                       Container(
                         width: double.infinity,
                         height: 200,
@@ -178,7 +164,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                         ),
                         child: Stack(
                           children: [
-                            // Video Background
                             Container(
                               width: double.infinity,
                               height: double.infinity,
@@ -188,14 +173,12 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                               ),
                             ),
 
-                            // Top Bar with Logo and Title
                             Positioned(
                               top: 16,
                               left: 16,
                               right: 16,
                               child: Row(
                                 children: [
-                                  // OneStop Logo
                                   Container(
                                     width: 24,
                                     height: 24,
@@ -250,7 +233,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                                       ),
                                     ),
                                   ),
-                                  // Menu Icon
                                   Container(
                                     width: 16,
                                     height: 16,
@@ -288,7 +270,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                               ),
                             ),
 
-                            // Play Button
                             Center(
                               child: GestureDetector(
                                 onTap: _launchVideo,
@@ -317,7 +298,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
               ),
             ),
 
-            // Done Button
             Container(
               padding: const EdgeInsets.all(16),
               child: AppButton(
@@ -326,7 +306,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                 size: AppButtonSize.medium,
                 isDisabled: !_hasWatchedVideo,
                 onPressed: _hasWatchedVideo ? () {
-                  // TODO: Navigate to dashboard or complete flow
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Welcome to OneStopRx Driver! You can now start accepting rides.'),
@@ -336,8 +315,6 @@ class _RegistrationSuccessScreenState extends State<RegistrationSuccessScreen> {
                 } : null,
               ),
             ),
-
-            // Navigation handle
             Container(
               margin: const EdgeInsets.only(bottom: 10),
               width: 108,

@@ -27,13 +27,8 @@ class PaymentConfirmationPage extends StatelessWidget {
             // Background pattern with logo marks
             _buildBackgroundPattern(),
             
-            // Main content
             Column(
               children: [
-                // Status bar
-                _buildStatusBar(),
-                
-                // Main content
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -87,46 +82,7 @@ class PaymentConfirmationPage extends StatelessWidget {
     );
   }
 
-  Widget _buildStatusBar() {
-    return Container(
-      padding: EdgeInsets.fromLTRB(24.h, 8.v, 24.h, 8.v),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            '12:30',
-            style: TextStyle(
-              fontFamily: 'Roboto',
-              fontWeight: FontWeight.w500,
-              fontSize: 14.fSize,
-              color: const Color(0xFFF9FAFB),
-            ),
-          ),
-          Row(
-            children: [
-              Icon(
-                Icons.wifi,
-                color: const Color(0xFFD0D5DD),
-                size: 16.adaptSize,
-              ),
-              SizedBox(width: 4.h),
-              Icon(
-                Icons.signal_cellular_4_bar,
-                color: const Color(0xFFD0D5DD),
-                size: 16.adaptSize,
-              ),
-              SizedBox(width: 4.h),
-              Icon(
-                Icons.battery_full,
-                color: const Color(0xFFD0D5DD),
-                size: 16.adaptSize,
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildSuccessIcon() {
     return Container(
@@ -174,7 +130,7 @@ class PaymentConfirmationPage extends StatelessWidget {
               fontFamily: 'Plus Jakarta Sans',
               fontWeight: FontWeight.w700,
               fontSize: 30.fSize,
-              height: 1.2666666666666666,
+              height: 1.266,
               letterSpacing: -1.0,
               color: Colors.white,
             ),
@@ -237,22 +193,6 @@ class PaymentConfirmationPage extends StatelessWidget {
             ),
           ),
           
-          SizedBox(height: 24.v),
-          
-          // Android navigation bar
-          Container(
-            height: 24.v,
-            child: Center(
-              child: Container(
-                width: 108.h,
-                height: 4.v,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFEAECF0),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

@@ -22,12 +22,10 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   CountryFlag selectedCountry = CountrySelector.defaultCountries.first;
   
-  // Controllers
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   
-  // Form state
   bool agreedToTerms = true;
   bool isFormValid = false;
 
@@ -56,7 +54,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Set system UI overlay style for this screen
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -82,22 +79,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               },
             ),
             
-            // Scrollable content
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    // Header Text Section
                     _buildHeaderTextSection(),
                     
-                    // Form Fields Section
                     _buildFormSection(),
                   ],
                 ),
               ),
             ),
             
-            // Bottom Section with Button and Navigation
             _buildBottomSection(),
           ],
         ),
@@ -123,7 +116,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              // Sparkles emoji
               Text(
                 '✨',
                 style: TextStyle(fontSize: 24.fSize),
@@ -133,7 +125,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           
           SizedBox(height: 4.v),
           
-          // Subtitle
           Text(
             'Join our team as a driver and be the hero in times of need!',
             style: AppTextStyles.bodyMedium.copyWith(
@@ -153,7 +144,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       ),
       child: Column(
         children: [
-          // Phone Number Field with country selector
           AppPhoneInputField(
             label: 'Phone Number',
             hintText: '8019292046',
@@ -181,7 +171,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
           SizedBox(height: 16.v),
 
-          // Email Field
           CustomInputField(
             label: 'Email Address',
             hintText: 'e.g youremail@example.com',
@@ -190,7 +179,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             onChanged: (value) => _checkFormValidation(),
           ),
           
-          // City Field (Dropdown)
           GestureDetector(
             onTap: () => _showCitySelector(context),
             child: CustomInputField(
@@ -205,7 +193,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           
           SizedBox(height: 8.v),
           
-          // Terms and conditions checkbox
           _buildTermsCheckbox(),
         ],
       ),
@@ -247,7 +234,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         
         SizedBox(width: 8.h),
         
-        // Terms text
         Expanded(
           child: Text(
             'By ticking, you are confirming that you have read, understood,agree and comply with Onestoprx Terms of Service and Privacy Policy.',
@@ -266,7 +252,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       padding: EdgeInsets.all(16.h),
       child: Column(
         children: [
-          // Register Button
           AppButton(
             text: 'Register as a driver',
             type: isFormValid ? AppButtonType.primary : AppButtonType.primary,
@@ -279,7 +264,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
             margin: EdgeInsets.only(bottom: 16.v),
           ),
           
-          // Login Link
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -308,10 +292,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
-  // Action handlers
   void _showCitySelector(BuildContext context) {
     final cities = ['Lagos', 'Abuja', 'Port Harcourt', 'Kano', 'Ibadan', 'Benin City'];
-    
     showModalBottomSheet(
       context: context,
       builder: (context) => Container(
@@ -346,7 +328,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     debugPrint('Email: ${emailController.text}');
     debugPrint('City: ${cityController.text}');
     
-    // Navigate to OTP confirmation screen
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -360,7 +341,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   void _handleLogin() {
     debugPrint('Login pressed');
-    // Navigate to login screen
     Navigator.push(
       context,
       MaterialPageRoute(

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../core/theme/app_colors.dart';
-import '../core/theme/app_text_styles.dart';
 import '../util/image_constant.dart';
-import '../util/size_utils.dart';
-import '../widgets/app_button.dart';
-import '../widgets/app_logo.dart';
 import '../widgets/country_selector.dart';
 import '../widgets/custom_image_view.dart';
 import 'login_screen.dart';
@@ -25,29 +20,23 @@ class _AuthScreenState extends State<AuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Set system UI overlay style for this screen
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: Brightness.dark,
         statusBarBrightness: Brightness.light,
-        systemNavigationBarColor: AppColors.background,
+        systemNavigationBarColor: Color(0xFFFFFFFF), // AppColors.background
         systemNavigationBarIconBrightness: Brightness.dark,
       ),
     );
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: const Color(0xFFFFFFFF), // AppColors.background
       body: Column(
         children: [
-          // Hero Image Section
           _buildHeroImageSection(),
-          
-          // Content Section
           _buildContentSection(),
-          
-          // Buttons Section
-          _buildButtonsSection(),
+           _buildButtonsSection(),
         ],
       ),
     );
@@ -55,21 +44,19 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Widget _buildHeader() {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.h,
-        vertical: 12.v,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0, // 16.h
+        vertical: 12.0,   // 12.v
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Logo
         SvgPicture.asset(
             ImageConstant.AppLogoNew,
-            height: 20.v,
+            height: 20.0, // 20.v
             fit: BoxFit.contain,
           ),
           
-          // Language/Country Selector
           CountrySelector(
             selectedCountry: selectedCountry,
             countries: CountrySelector.defaultCountries,
@@ -88,10 +75,9 @@ class _AuthScreenState extends State<AuthScreen> {
     return Expanded(
       child: Stack(
         children: [
-          // Hero Image - extends to edges
           Positioned.fill(
             child: CustomImageView(
-              imagePath: ImageConstant.ambulanceTruck, // Using ambulanceTruck from ImageConstant
+              imagePath: ImageConstant.ambulanceTruck, 
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
@@ -99,7 +85,6 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
           
-          // Header overlaid on top of hero image
           Positioned(
             top: 0,
             left: 0,
@@ -109,7 +94,6 @@ class _AuthScreenState extends State<AuthScreen> {
             ),
           ),
           
-          // Optional gradient overlay for better text readability
           Positioned.fill(
             child: Container(
               decoration: BoxDecoration(
@@ -132,20 +116,22 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Widget _buildContentSection() {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.h,
-        vertical: 16.v,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0, 
+        vertical: 16.0,   
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Main heading
           RichText(
             textAlign: TextAlign.left,
-            text: TextSpan(
-              style: AppTextStyles.headingLarge.copyWith(
-                fontSize: 30.fSize,
+            text: const TextSpan(
+              style: TextStyle(
+                fontFamily: 'PlusJakartaSans',
+                fontWeight: FontWeight.w600,
+                fontSize: 30.0, 
                 height: 1.267,
+                color: Color(0xFF191919),
                 letterSpacing: -1.0,
               ),
               children: [
@@ -168,55 +154,119 @@ class _AuthScreenState extends State<AuthScreen> {
 
   Widget _buildButtonsSection() {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 16.h,
-        vertical: 0,
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16.0, 
       ),
       child: Column(
         children: [
-          // Log In Button (Primary)
-          AppButton(
-            text: 'Log In',
-            type: AppButtonType.primary,
-            size: AppButtonSize.medium,
-            onPressed: () {
-              // Handle log in navigation
-              _handleLogIn();
-            },
-            margin: EdgeInsets.only(bottom: 16.v),
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(bottom: 16.0), // 16.v
+            child: ElevatedButton(
+              onPressed: () {
+                _handleLogIn();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF000D1C), // AppColors.buttonPrimary
+                foregroundColor: const Color(0xFFFFFFFF), // AppColors.textOnPrimary
+                disabledBackgroundColor: const Color(0xFF9CA3AF), // AppColors.gray400
+                disabledForegroundColor: const Color(0xFFFFFFFF), // AppColors.white
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0), // medium size
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1000),
+                ),
+                elevation: 0,
+                shadowColor: Colors.transparent,
+              ),
+              child: Text(
+                'Log In',
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.0, // medium button size
+                  height: 1.429,
+                  color: Color(0xFFFFFFFF),
+                  letterSpacing: -0.2,
+                ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
           
-          // Sign Up Button (Secondary)
-          AppButton(
-            text: 'Sign Up',
-            type: AppButtonType.secondary,
-            size: AppButtonSize.medium,
-            onPressed: () {
-              // Handle sign up navigation
-              _handleSignUp();
-            },
-            margin: EdgeInsets.only(bottom: 16.v),
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(bottom: 16.0), // 16.v
+            child: ElevatedButton(
+              onPressed: () {
+                _handleSignUp();
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFE5F3FF), // AppColors.buttonSecondary
+                foregroundColor: const Color(0xFF077BF8), // AppColors.buttonSecondaryText
+                disabledBackgroundColor: const Color(0xFF9CA3AF).withOpacity(0.1), // AppColors.gray400
+                disabledForegroundColor: const Color(0xFF9CA3AF), // AppColors.gray400
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0), // medium size
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1000),
+                ),
+                elevation: 0,
+                shadowColor: Colors.transparent,
+              ),
+              child: Text(
+                'Sign Up',
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.0, // medium button size
+                  height: 1.429,
+                  color: Color(0xFF077BF8),
+                  letterSpacing: -0.2,
+                ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
           
-          // Continue Sign up Button (Tertiary)
-          AppButton(
-            text: 'Continue Sign up',
-            type: AppButtonType.tertiary,
-            size: AppButtonSize.medium,
-            onPressed: () {
-              // Handle continue sign up navigation
-              _handleContinueSignUp();
-            },
-            margin: EdgeInsets.only(bottom: 16.v),
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(bottom: 16.0), // 16.v
+            child: OutlinedButton(
+              onPressed: () {
+                _handleContinueSignUp();
+              },
+              style: OutlinedButton.styleFrom(
+                backgroundColor: const Color(0xFFFFFFFF), // AppColors.buttonTertiary
+                foregroundColor: const Color(0xFF077BF8), // AppColors.buttonTertiaryText
+                disabledForegroundColor: const Color(0xFF9CA3AF), // AppColors.gray400
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0), // medium size
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(1000),
+                ),
+                side: const BorderSide(color: Colors.transparent),
+              ),
+              child: Text(
+                'Continue Sign up',
+                style: const TextStyle(
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.0, // medium button size
+                  height: 1.429,
+                  color: Color(0xFF077BF8),
+                  letterSpacing: -0.2,
+                ),
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 
-  // Action handlers
   void _handleLogIn() {
-    // Navigate to login screen
     debugPrint('Log In button pressed');
     Navigator.push(
       context,
@@ -227,7 +277,6 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void _handleSignUp() {
-    // Navigate to sign up screen
     debugPrint('Sign Up button pressed');
     Navigator.push(
       context,
@@ -238,8 +287,7 @@ class _AuthScreenState extends State<AuthScreen> {
   }
 
   void _handleContinueSignUp() {
-    // Navigate to continue sign up screen
-    debugPrint('Continue Sign up button pressed');
+    debugPrint('Continue Sign');
     Navigator.push(
       context,
       MaterialPageRoute(

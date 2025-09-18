@@ -58,15 +58,11 @@ class _LoginOtpConfirmationScreenState extends State<LoginOtpConfirmationScreen>
   }
 
   void startCountdown() {
-    // Countdown logic will be added later
   }
 
   void _submit() {
-    // Submit OTP logic will be added later
     debugPrint('Login OTP Confirmed: ${otpPinController.text}');
-    
-    // Navigate to dashboard or main app screen
-    // TODO: Replace with actual dashboard navigation
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         content: Text('Login successful! Welcome to OneStopRx Driver'),
@@ -74,7 +70,6 @@ class _LoginOtpConfirmationScreenState extends State<LoginOtpConfirmationScreen>
       ),
     );
     
-    // For now, go back to auth screen - replace with dashboard navigation
     Navigator.of(context).popUntil((route) => route.isFirst);
     Navigator.pushReplacement(
       context,
@@ -92,7 +87,6 @@ class _LoginOtpConfirmationScreenState extends State<LoginOtpConfirmationScreen>
       backgroundColor: AppColors.white,
       body: Column(
         children: [
-          // App Header with SafeArea
           SafeArea(
             child: AppHeader(
               selectedCountry: selectedCountry,
@@ -167,7 +161,6 @@ class _LoginOtpConfirmationScreenState extends State<LoginOtpConfirmationScreen>
               onTap: () {
                 setState(() => resendNow = false);
                 startCountdown();
-                // Backend logic removed as requested
               },
               child: Text(
                 'Resend OTP',
@@ -179,7 +172,6 @@ class _LoginOtpConfirmationScreenState extends State<LoginOtpConfirmationScreen>
               ),
             ),
             SizedBox(height: 14.v),
-            // Loading state removed as requested - no backend logic
             AppButton(
               margin: const EdgeInsets.all(16),
               text: "Confirm",

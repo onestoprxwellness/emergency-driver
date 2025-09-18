@@ -19,14 +19,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   CountryFlag selectedCountry = CountrySelector.defaultCountries.first;
-  
-  // Controllers
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  
-  // Form state
+
   bool isFormValid = false;
-  bool isEmailLogin = true; // Toggle between email and phone login
+  bool isEmailLogin = true;
 
   @override
   void initState() {
@@ -44,9 +42,13 @@ class _LoginScreenState extends State<LoginScreen> {
   void _checkFormValidation() {
     setState(() {
       if (isEmailLogin) {
-        isFormValid = emailController.text.isNotEmpty && _isValidEmail(emailController.text);
+        isFormValid =
+            emailController.text.isNotEmpty &&
+            _isValidEmail(emailController.text);
       } else {
-        isFormValid = phoneController.text.isNotEmpty && phoneController.text.length >= 10;
+        isFormValid =
+            phoneController.text.isNotEmpty &&
+            phoneController.text.length >= 10;
       }
     });
   }
@@ -64,7 +66,6 @@ class _LoginScreenState extends State<LoginScreen> {
       backgroundColor: AppColors.white,
       body: Column(
         children: [
-          // App Header with SafeArea
           SafeArea(
             child: AppHeader(
               selectedCountry: selectedCountry,
@@ -76,24 +77,15 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             ),
           ),
-          
-          // Main Content
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header Text Section
-                  _buildHeaderSection(),
-                  
-                  // Input Field Section
-                  _buildInputSection(),
-                ],
+                children: [_buildHeaderSection(), _buildInputSection()],
               ),
             ),
           ),
-          
-          // Bottom Buttons Section
+
           _buildBottomSection(),
         ],
       ),
@@ -118,7 +110,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               const SizedBox(width: 12),
-              // Dancing man emoji
               SvgPicture.asset(
                 ImageConstant.imgEmojiManDancing,
                 width: 28,
@@ -127,7 +118,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ],
           ),
           const SizedBox(height: 4),
-          // Subtitle
           SizedBox(
             width: 320,
             child: Text(
@@ -147,9 +137,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
       child: Column(
         children: [
-          // Conditional Input Field (Email or Phone)
           if (isEmailLogin) ...[
-            // Email Input Field
             CustomInputField(
               label: "Email",
               hintText: "yourmail@gmail.com",
@@ -158,7 +146,6 @@ class _LoginScreenState extends State<LoginScreen> {
               onChanged: (value) => _checkFormValidation(),
             ),
           ] else ...[
-            // Phone Input Field
             AppPhoneInputField(
               label: 'Phone Number',
               hintText: '8019292046',
@@ -186,8 +173,6 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ],
           const SizedBox(height: 16),
-          
-          // Switch Login Method Button
           Align(
             alignment: Alignment.centerRight,
             child: GestureDetector(
@@ -197,7 +182,9 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: Text(
-                  isEmailLogin ? "Use Phone Number Instead" : "Use Email Instead",
+                  isEmailLogin
+                      ? "Use Phone Number Instead"
+                      : "Use Email Instead",
                   style: AppTextStyles.bodySmall.copyWith(
                     color: AppColors.brandBlue,
                     fontWeight: FontWeight.w500,
@@ -215,7 +202,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _buildBottomSection() {
     return Column(
       children: [
-        // Continue Button
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: AppButton(
@@ -223,14 +209,16 @@ class _LoginScreenState extends State<LoginScreen> {
             type: AppButtonType.primary,
             size: AppButtonSize.medium,
             isDisabled: !isFormValid,
-            onPressed: isFormValid ? () {
-              _handleContinue();
-            } : null,
+            onPressed:
+                isFormValid
+                    ? () {
+                      _handleContinue();
+                    }
+                    : null,
           ),
         ),
         const SizedBox(height: 16),
-        
-        // Sign up link
+
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -256,8 +244,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ],
         ),
         const SizedBox(height: 16),
-        
-        // Navigation handle
+
         Container(
           margin: const EdgeInsets.only(bottom: 10),
           width: 108,
@@ -271,31 +258,30 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Action handlers
   void _handleContinue() {
     if (isEmailLogin) {
       debugPrint('Continue pressed with email: ${emailController.text}');
-      // Navigate to Email OTP confirmation screen
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LoginOtpConfirmationScreen(
-            email: emailController.text,
-            isEmailLogin: true,
-          ),
+          builder:
+              (context) => LoginOtpConfirmationScreen(
+                email: emailController.text,
+                isEmailLogin: true,
+              ),
         ),
       );
     } else {
       debugPrint('Continue pressed with phone: ${phoneController.text}');
-      // Navigate to Phone OTP confirmation screen
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => LoginOtpConfirmationScreen(
-            phoneNumber: phoneController.text,
-            countryCode: selectedCountry.dialCode,
-            isEmailLogin: false,
-          ),
+          builder:
+              (context) => LoginOtpConfirmationScreen(
+                phoneNumber: phoneController.text,
+                countryCode: selectedCountry.dialCode,
+                isEmailLogin: false,
+              ),
         ),
       );
     }
@@ -304,7 +290,6 @@ class _LoginScreenState extends State<LoginScreen> {
   void _handleSwitchLoginMethod() {
     setState(() {
       isEmailLogin = !isEmailLogin;
-      // Clear the controllers when switching
       emailController.clear();
       phoneController.clear();
       _checkFormValidation();
@@ -314,7 +299,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void _handleSignUp() {
     debugPrint('Sign up pressed');
-    // TODO: Navigate to registration screen
-    Navigator.pop(context); // Go back to registration screen for now
+    Navigator.pop(context);
   }
 }

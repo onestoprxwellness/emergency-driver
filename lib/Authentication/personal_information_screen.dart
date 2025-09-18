@@ -31,10 +31,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
   final TextEditingController lastNameController = TextEditingController();
   final TextEditingController referralCodeController = TextEditingController();
   
-  // Gender selection
   String selectedGender = '';
   
-  // Form state
   bool isFormValid = false;
 
   @override
@@ -65,7 +63,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
       backgroundColor: AppColors.white,
       body: Column(
         children: [
-          // App Header with SafeArea
           SafeArea(
             child: AppHeader(
               selectedCountry: selectedCountry,
@@ -78,10 +75,8 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             ),
           ),
           
-          // Progress Indicator
           RegistrationProgressIndicator(currentStep: widget.currentStep),
           
-          // Main Content
           Expanded(
             child: SingleChildScrollView(
               padding: EdgeInsets.symmetric(horizontal: 16.h),
@@ -90,19 +85,16 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
                 children: [
                   SizedBox(height: 12.v),
                   
-                  // Header Text Section
                   _buildHeaderSection(),
                   
                   SizedBox(height: 24.v),
                   
-                  // Form Fields
                   _buildFormFields(),
                 ],
               ),
             ),
           ),
           
-          // Bottom Buttons
           _buildBottomButtons(),
         ],
       ),
@@ -115,7 +107,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Title with sparkles emoji
         Row(
           children: [
             Text(
@@ -221,7 +212,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
         SizedBox(height: 8.v),
         Row(
           children: [
-            // Male Option
             Expanded(
               child: GestureDetector(
                 onTap: () {
@@ -263,7 +253,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
               ),
             ),
             SizedBox(width: 16.h),
-            // Female Option
             Expanded(
               child: GestureDetector(
                 onTap: () {
@@ -317,7 +306,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
       padding: EdgeInsets.all(16.h),
       child: Row(
         children: [
-          // Back Button
           Expanded(
             child: AppButton(
               text: 'Back',
@@ -329,7 +317,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
             ),
           ),
           SizedBox(width: 16.h),
-          // Next Button
           Expanded(
             child: AppButton(
               text: 'Next',
@@ -355,7 +342,6 @@ class _PersonalInformationScreenState extends State<PersonalInformationScreen> {
     debugPrint('Gender: $selectedGender');
     debugPrint('Referral Code: ${referralCodeController.text}');
     
-    // Navigate to Driver Information screen
     Navigator.push(
       context,
       MaterialPageRoute(

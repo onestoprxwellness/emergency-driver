@@ -6,10 +6,6 @@ class AppTextStyles {
   static const String onest = 'Onest';
   static const String inter = 'Inter';
   static const String plusJakarta = 'PlusJakartaSans';
-  static const String interMedium = 'InterMedium';
-  static const String interSemiBold = 'InterSemiBold';
-  static const String interBold = 'InterBold';
-  static String interRegular = 'InterRegular';
 
   // Logo Text Styles
   static const TextStyle logoLarge = TextStyle(

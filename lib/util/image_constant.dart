@@ -641,7 +641,6 @@ class ImageConstant {
   static String male_picker = '$base/vuesax.png';
   static String female_picker = '$base/Female.png';
   static String quoteInfo = '$base/qutoInfo.png';
-
   static String bookAppointmentSvg = '$base/bookAppointmentSvg.svg';
   static String seenowSvg = '$base/seenowSvg.svg';
   static String referAFriendSvg = '$base/referafriendSvg.svg';

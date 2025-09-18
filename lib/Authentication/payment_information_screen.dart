@@ -226,10 +226,7 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
               onCountryChanged: (CountryFlag country) {},
             ),
 
-            // Progress Indicator
             const RegistrationProgressIndicator(currentStep: 4),
-
-            // Content
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -237,7 +234,6 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Header Text
                       Row(
                         children: [
                           Text(
@@ -248,7 +244,6 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
                             ),
                           ),
                           const SizedBox(width: 4),
-                          // Sparkles emoji
                           Container(
                             width: 24,
                             height: 24,
@@ -319,7 +314,6 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Bank Name Input with dropdown
                       GestureDetector(
                         onTap: _showBankDropdown,
                         child: CustomInputField(
@@ -333,7 +327,6 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Next of Kin Full Name Input
                       CustomInputField(
                         label: "Next of kin full name",
                         hintText: 'e.g., John Doe',
@@ -342,7 +335,6 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Next of Kin Relationship Input with dropdown
                       GestureDetector(
                         onTap: _showRelationshipDropdown,
                         child: CustomInputField(
@@ -355,8 +347,6 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
                         ),
                       ),
                       const SizedBox(height: 16),
-
-                      // Next of Kin Phone Number Input
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -380,12 +370,10 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
                             ),
                             child: Row(
                               children: [
-                                // Country Flag and Code
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                                   child: Row(
                                     children: [
-                                      // Nigerian Flag
                                       Container(
                                         width: 18,
                                         height: 18,
@@ -445,7 +433,6 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
                                   ),
                                 ),
                                 const SizedBox(width: 12),
-                                // Phone Number Input
                                 Expanded(
                                   child: TextFormField(
                                     controller: _nextOfKinPhoneController,
@@ -481,12 +468,10 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
               ),
             ),
 
-            // Buttons
             Container(
               padding: const EdgeInsets.all(16),
               child: Row(
                 children: [
-                  // Back Button
                   Expanded(
                     child: AppButton(
                       text: "Back",
@@ -498,7 +483,6 @@ class _PaymentInformationScreenState extends State<PaymentInformationScreen> {
                     ),
                   ),
                   const SizedBox(width: 16),
-                  // Next Button
                   Expanded(
                     child: AppButton(
                       text: "Next",

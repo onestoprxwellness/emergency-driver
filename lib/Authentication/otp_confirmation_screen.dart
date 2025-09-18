@@ -39,14 +39,11 @@ class _OtpConfirmationScreenState extends State<OtpConfirmationScreen> {
   }
 
   void startCountdown() {
-    // Countdown logic will be added later
   }
 
   void _submit() {
-    // Submit OTP logic will be added later
     debugPrint('OTP Confirmed: ${otpPinController.text}');
     
-    // Navigate to Personal Information screen
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -61,7 +58,6 @@ class _OtpConfirmationScreenState extends State<OtpConfirmationScreen> {
       backgroundColor: AppColors.white,
       body: Column(
         children: [
-          // App Header with SafeArea
           SafeArea(
             child: AppHeader(
               selectedCountry: selectedCountry,
@@ -74,7 +70,6 @@ class _OtpConfirmationScreenState extends State<OtpConfirmationScreen> {
             ),
           ),
           
-          // Main Content - Exact replica of your structure
           Expanded(
             child: ListView(
               padding: EdgeInsets.symmetric(horizontal: 20.h, vertical: 19.v),
@@ -134,7 +129,6 @@ class _OtpConfirmationScreenState extends State<OtpConfirmationScreen> {
               onTap: () {
                 setState(() => resendNow = false);
                 startCountdown();
-                // Backend logic removed as requested
               },
               child: Text(
                 'Resend OTP',
@@ -146,7 +140,6 @@ class _OtpConfirmationScreenState extends State<OtpConfirmationScreen> {
               ),
             ),
             SizedBox(height: 14.v),
-            // Loading state removed as requested - no backend logic
             AppButton(
               margin: const EdgeInsets.all(16),
               text: "Confirm",

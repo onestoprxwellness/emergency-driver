@@ -190,7 +190,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            // Header
             AppHeader(
               selectedCountry: const CountryFlag(
                 name: 'Nigeria',
@@ -202,10 +201,7 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
               onCountryChanged: (CountryFlag country) {},
             ),
 
-            // Progress Indicator
             const RegistrationProgressIndicator(currentStep: 3),
-
-            // Content
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -213,7 +209,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Header Text
                       Row(
                         children: [
                           Text(
@@ -239,8 +234,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                         ),
                       ),
                       const SizedBox(height: 24),
-
-                      // Vehicle Year Input with dropdown
                       GestureDetector(
                         onTap: _showYearDropdown,
                         child: CustomInputField(
@@ -254,7 +247,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Vehicle Manufacturer Input
                       CustomInputField(
                         label: "Vehicle Manufacturer",
                         hintText: 'Select your vehicle manufacturer',
@@ -263,7 +255,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Vehicle Model Input
                       CustomInputField(
                         label: "Vehicle Model",
                         hintText: 'Select your vehicle model',
@@ -273,7 +264,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // License Plate Input
                       CustomInputField(
                         label: "License Plate",
                         hintText: 'Input your vehicle license plate number',
@@ -282,7 +272,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Vehicle Color Input with dropdown
                       GestureDetector(
                         onTap: _showColorDropdown,
                         child: CustomInputField(
@@ -296,7 +285,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Exterior Picture Upload Section
                       Container(
                         padding: const EdgeInsets.only(bottom: 16),
                         decoration: const BoxDecoration(
@@ -336,7 +324,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            // Upload Button
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
@@ -374,7 +361,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Interior Picture Upload Section
                       Container(
                         padding: const EdgeInsets.only(bottom: 16),
                         decoration: const BoxDecoration(
@@ -414,7 +400,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            // Upload Button
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
@@ -452,7 +437,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                       ),
                       const SizedBox(height: 16),
 
-                      // Vehicle License Certificate Upload Section
                       Container(
                         padding: const EdgeInsets.only(bottom: 16),
                         child: Column(
@@ -484,7 +468,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                               ),
                             ),
                             const SizedBox(height: 16),
-                            // Upload Button
                             Container(
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 20,
@@ -525,8 +508,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                 ),
               ),
             ),
-
-            // Bottom Buttons
             Container(
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -567,8 +548,6 @@ class _VehicleInformationScreenState extends State<VehicleInformationScreen> {
                 ],
               ),
             ),
-
-            // Navigation handle
             Container(
               margin: const EdgeInsets.only(bottom: 10),
               width: 108,

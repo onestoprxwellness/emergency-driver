@@ -35,10 +35,8 @@ class CustomInputField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Label with Icon and Input Field
           Row(
             children: [
-              // Prefix Icon
               if (prefixIcon != null)
                 SvgPicture.asset(
                   prefixIcon!,
@@ -92,7 +90,6 @@ class CustomInputField extends StatelessWidget {
                             onChanged: onChanged,
                           ),
                         ),
-                        // Suffix Icon
                         if (suffixIcon != null) ...[
                           const SizedBox(width: 8),
                           SvgPicture.asset(
@@ -113,7 +110,6 @@ class CustomInputField extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          // Underline
           Container(
             height: 1,
             width: double.infinity,
